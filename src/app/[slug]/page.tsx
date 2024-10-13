@@ -5,7 +5,17 @@ import ProductImages from "@/components/ProductImages";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
+// This function generates static paths for the slugs
+export async function generateStaticParams() {
+  const wixClient = await wixClientServer();
+  
+  const products = await wixClient.products.queryProducts().find();
 
+  // Map the product slugs into an array of objects with the "slug" key
+  return products.items.map((product: any) => ({
+    slug: product.slug,
+  }));
+}
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const wixClient = await wixClientServer();
 
