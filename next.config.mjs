@@ -19,8 +19,9 @@ const nextConfig = {
         hostname: "app-uploads-cdn.fera.ai",
       },
     ],
- 
+    // unoptimized: true, // This is required for static export
   },
+  // output: 'export', // Static export mode
 
 };
 

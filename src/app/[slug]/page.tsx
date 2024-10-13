@@ -1,3 +1,4 @@
+
 import Add from "@/components/Add";
 import CustomizeProducts from "@/components/CustomizeProducts";
 import ProductImages from "@/components/ProductImages";
@@ -5,28 +6,24 @@ import ProductImages from "@/components/ProductImages";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-// This function generates static paths for the slugs
-export async function generateStaticParams() {
-  const wixClient = await wixClientServer();
-  
-  const products = await wixClient.products.queryProducts().find();
 
-  // Map the product slugs into an array of objects with the "slug" key
-  return products.items.map((product: any) => ({
-    slug: product.slug,
-  }));
-}
+
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const wixClient = await wixClientServer();
+
+  // // Validate slug
+  // if (!params?.slug) {
+  //   return notFound(); // Handle missing slug case
+  // }
 
   const products = await wixClient.products
     .queryProducts()
     .eq("slug", params.slug)
     .find();
 
-  if (!products.items[0]) {
-    return notFound();
-  }
+  // if (!products.items[0]) {
+  // }
+// console.log(products);
 
   const product = products.items[0];
 
